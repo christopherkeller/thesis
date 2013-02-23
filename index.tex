@@ -1,0 +1,55 @@
+%TEX TS-program = xelatex
+\documentclass[11pt, twoside, openright]{book}
+\usepackage[margin=2.54cm]{geometry} % set margins to 1 inch all the way around
+\usepackage{fontspec}
+	\defaultfontfeatures{Ligatures=TeX}
+%	\newcommand{\lmr}{\fontfamily{lmr}\selectfont} % Latin Modern Roman
+%	\setmainfont{Birka LT Pro}
+	\setmainfont{Kepler Std Light}
+	\setsansfont[Mapping=tex-text]{Myriad Pro}
+	\setmonofont[Scale=MatchLowercase]{Monaco}
+\usepackage{titlesec}
+\titleformat{\chapter}[display]
+    {\huge\bfseries\sffamily}{\chaptertitlename\ \thechapter}{20pt}{\Large}[\titlerule]
+%this would be used to change section headings
+%\titleformat{\section}{\Large\bfseries\sffamily}    
+% set up indexing for all the acronyms
+\usepackage{makeidx}
+\makeindex
+\usepackage[acronym,toc]{glossaries}
+\makeglossaries
+\usepackage{graphicx}
+\usepackage[sectionbib]{chapterbib} % this handles references per chapter
+% this handles the risk equation -- may not be necessary
+%\usepackage{amsmath}
+
+%\usepackage[font=sf, labelfont={sf,bf}, margin=1cm]{caption}
+\usepackage[font=small]{caption}
+\PassOptionsToPackage{hyphens}{url}\usepackage{hyperref}
+\renewcommand{\UrlBreaks}{\do\/\do\a\do\b\do\c\do\d\do\e\do\f\do\g\do\h\do\i\do\j\do\k\do\l\do\m\do\n\do\o\do\p\do\q\do\r\do\s\do\t\do\u\do\v\do\w\do\x\do\y\do\z\do\A\do\B\do\C\do\D\do\E\do\F\do\G\do\H\do\I\do\J\do\K\do\L\do\M\do\N\do\O\do\P\do\Q\do\R\do\S\do\T\do\U\do\V\do\W\do\X\do\Y\do\Z} % this handles breaking URLS smartly
+\usepackage{enumitem}
+\usepackage{setspace}
+    \onehalfspacing % set line spacing to 1.5
+    
+%\newcommand\smallcaps[1]{{\footnotesize\textbf{#1}}}
+\newcommand\climatedge{ClimatEdge\texttrademark{} }
+\newcommand\ce{ClimatEdge 2.0 }
+
+%\setlist{nolistsep}
+\pagestyle{empty}
+\setlength{\parindent}{0pt} % don't indent paragraphs globally
+
+\begin{document}
+	\include{title}
+    \tableofcontents
+	\include{chapter1}
+	\include{chapter2}
+	\include{chapter3}
+    \include{chapter4}
+    \include{chapter5}
+	\include{appendix}
+    \printglossaries
+    \clearpage
+    \addcontentsline{toc}{chapter}{Index}
+    \printindex
+\end{document} 

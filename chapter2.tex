@@ -1,0 +1,60 @@
+%!TEX root=index.tex
+
+\newacronym{ncdc}{NCDC}{National Climatic Data Center}
+\newacronym{soi}{SOI}{Southern Oscillation Index}
+\newacronym{tvs}{TVS}{National Tornado Vortex Signature}
+\newacronym{mda}{MDA}{National Mesoscyclone Detection Algorithm}
+
+\chapter{Case Study}
+\section*{Tornado}
+A primary carrier of property and casualty insurance would potentially be very interested in knowing the probability of tornado occurrence in geographical areas in which they have a large customer base. There are two months in the year which kick off tornado season in the United States: the warm season starting in March, and the cold season starting in November. Having accurate predictions of weekly seasonal tornado counts months in advance, would constitute a significant business advantage over competitors. There are two specific business cases for the property carrier to focus on:
+\begin{itemize}
+    \item an actuary who will use the historical year-to-year probability and future counts to create overlays based on parcel level policy and claims data on a 50km x 50km geographical grid
+    \item an underwriter who will use actuarial information to create the appropriate terms and rates offering for their customers that maximizes revenues at the lowest risk level
+\end{itemize}
+A working group, consisting of Dr. Christopher Anderson, Dr. Dan Walker, and myself, has determined that the data layer for tornado prediction should contain the following [unpublished, 2013]:
+\begin{itemize}
+    \item \gls{merra} 3D historical data set\cite{mdisc}
+    \item \gls{soi} historical archives\cite{bom}
+    \item \gls{tvs} and \gls{mda}\cite{hdss} 
+    \item \gls{ncdc} historical tornado report\cite{ncdc}
+\end{itemize}
+All of this data is in the public domain and freely available to anyone that has the resources to store and analyze it. As mentioned in chapter one, currently CSC uses only the summary information provided by Giovanni in the \climatedge product. While Giovanni has the advantage of requiring no local computational resources, it represents the tip of the proverbial data iceberg and does not help in quantitative prediction.\\
+
+Combinations of the data sets listed above can vary in size from a few hundred gigabytes to a few hundred terabytes just for the raw data. In order to quantitatively process this data, we need a platform capable of performing the following operational layers:
+\begin{itemize}
+	\item retrieving data updates
+	\item storing and indexing for optimal retrieval
+	\item performing both real time and batch analytics
+	\item presenting analysis results
+\end{itemize}
+\subsection*{Data Acquisition}
+As all the data is freely available via standard HTTP requests, we simply need to put together a framework consisting of a repeatable process that polls each website for newly published data and retrieves it. If necessary, the framework can check with the data store to confirm what's new and what's not. Putting together such a framework is a relatively simple systems integration and development task and has plenty of prior art across the industry. I'd recommend the following components:
+\begin{itemize}
+	\item Three Linux instances to handle retrieval, monitoring, and hosting the source code repository, respectively.
+	\item Jenkins for continually monitoring and notifying the success or failure of the retrieval processes (one per data set). Jenkins will also serve as the means to deploy the most recent code from the code repository onto the server handling the retrieval process. Jenkins is open source and used commonly across the industry for this purpose, resulting in an easily hirable skill set.\cite{jenkins}
+	\item A repeatable method, such as Cron, to check and retrieve updated data sets at well defined publication intervals. Jenkins will monitor the success or failure of the cron jobs and notify as needed.
+	\item Developed code that contacts each web server and pulls down only the most recent data. If the data sets do not offer a simple means of determining what's recent, this code can query the data store so that it's aware of the last stored data. While we need unique code for each data set, the process of determining what's new and retrieving the code should be very similar across all the data sets. It's likely there will a reusable common library of functionality across each specific implementation. This development is likely to be done in a scriptable environment such as Python or Perl. The languages offer an excellent tradeoff between simplicity, flexibility, and execution speed.
+\end{itemize}
+
+\subsection*{Storing and Indexing}
+Once the data has arrived on the local system, it needs to processed and inserted into the data store. The data store should have the following characteristics:
+\begin{itemize}
+	\item Not inherently possess a single point of failure
+	\item Horizontally scale (as linearly as possible) in storage and performance
+\end{itemize}
+
+
+\subsection*{Analytics}
+
+\subsection*{Presentation}
+
+
+%\begingroup
+    % this removes the chapter title for the in-chapter bibliography
+%    \renewcommand{\chapter}[2]{}% for other classes
+\renewcommand\bibname{{References}}
+\bibliographystyle{plain}
+\bibliography{chapter2}
+%\endgroup
+% Review of the sources: internet, C3, books, etc plus interview with the experts

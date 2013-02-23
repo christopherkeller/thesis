@@ -1,0 +1,29 @@
+%!TEX root=index.tex
+
+%Review of the sources: internet, C3, books, etc plus interview with the experts
+
+\newacronym{hdf}{HDF}{Hierarchical Data Format}
+\newacronym{nosql}{NoSQL}{Not only SQL}
+
+\chapter{Tornado and Hail}
+In a guest blog post, Michael Stonebraker gives four detailed definitions to the term big data\index{big data}\cite{stonebraker}. He boils it down to the same basic concepts that most of the non-technical world uses: velocity, volume, or variety. \gls{merra} data is not particularly fast moving by modern measurements: the data can be retrieved in daily (containing hourly measurements) or monthly. As far as volume goes, \gls{merra} is about two hundred terabytes since January 1979 and growing according to Dr. Daniel Walker of CSC[personal communication, 2012]. Lastly, \gls{merra} only comes in as single format known as the \gls{hdf}\cite{hdf}.\\
+
+By Mr. Stonebraker's definition, the most applicable to \climatedge would be big analytics on big volumes of data. While two hundred terabytes is certainly manageable using commercially available modern hardware, it is too large to fit efficiently on a single system, thus being an excellent candidate for \gls{nosql}\index{noSQL}/big data technologies that tend to scale horizontally (scale out) rather than vertically (scale up).
+
+
+
+
+%\begingroup
+    % this removes the chapter title for the in-chapter bibliography
+%    \renewcommand{\chapter}[2]{}% for other classes
+\renewcommand\bibname{{References}}
+\bibliographystyle{plain}
+\bibliography{chapter2}
+%\endgroup
+% Review of the sources: internet, C3, books, etc plus interview with the experts
+
+
+
+%\cite{csc_press1}
+%Obama’s victory confirmed the value of using technology and data analytics. The technology side of Obama’s campaign was organized into teams to oversee technology, digital and analytics. Engineers working for the campaign developed tools such as Dashboard, an online organizing community, and Obama’s analytics team developed The Optimizer, a tool for placing television advertisements in front of the most optimal audiences for the least amount of money.
+%“The Obama campaign proved the power of big data,” says Gary Jackson, CSC’s director of Business Analytics. 
