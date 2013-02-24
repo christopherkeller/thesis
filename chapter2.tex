@@ -21,7 +21,7 @@ A working group, consisting of Dr. Christopher Anderson, Dr. Dan Walker, and mys
 \end{itemize}
 All of this data is in the public domain and freely available to anyone that has the resources to store and analyze it. As mentioned in chapter one, currently CSC uses only the summary information provided by Giovanni in the \climatedge product. While Giovanni has the advantage of requiring no local computational resources, it represents the tip of the proverbial data iceberg and does not help in quantitative prediction.\\
 
-Combinations of the data sets listed above can vary in size from a few hundred gigabytes to a few hundred terabytes just for the raw data. In order to quantitatively process this data, we need a platform capable of performing the following operational layers:
+Combinations of the data sets listed above can vary in size from a few hundred gigabytes to a few hundred terabytes just for the raw data. In order to quantitatively process this data, we need a service platform capable of performing the following operational layers:
 \begin{itemize}
 	\item retrieving data updates
 	\item storing and indexing for optimal retrieval
@@ -38,12 +38,34 @@ As all the data is freely available via standard HTTP requests, we simply need t
 \end{itemize}
 
 \subsection*{Storing and Indexing}
-Once the data has arrived on the local system, it needs to processed and inserted into the data store. The data store should have the following characteristics:
+Once the data has arrived on the local system, it needs to processed and inserted into the data store. This layer is the heart of any service offering. The data store must have the following characteristics:
 \begin{itemize}
 	\item Not inherently possess a single point of failure
 	\item Horizontally scale (as linearly as possible) in storage and performance
+	\item support realtime and batch analytics
 \end{itemize}
+There exists a top level Apache Hadoop project called Cassandra\cite{cassandra} that fulfills the requirements listed above. Within the data store implementation itself, we can use the following generic model for storing any piece of climate data.
+\begin{table}[htbp]
+	\caption*{Climate Data Model}
+	\centering
+	\begin{tabular}{l l}
+		\hline
+		What & Description \\ [0.5ex]
+		%heading
+		\hline
+		meta-data & what the measurement represents, i.e., total precipitation\\
+		time & time and date of measurement in UTC, i.e., YYYY-MM-DD HH:MM:SS\\
+		coordinates & geographic location in latitude and longitude, i.e. -90.0 to 90.0 and -180.0 to 180.0\\
+		value & measurement value, i.e. 0.000052977\\
+		\hline
+	\end{tabular}
+\end{table}
 
+With this simple structure and materialized views \index{materialized views}\cite{materialized_views}, we enable analytics based on any combination of the following searches:
+
+temporal 
+geospatial
+variable
 
 \subsection*{Analytics}
 

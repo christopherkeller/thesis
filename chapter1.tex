@@ -7,7 +7,7 @@
 \newacronym{sme}{SME}{Subject Matter Expert}
 \newacronym{pdf}{PDF}{Portable Document Format}
 \chapter{Introduction}
-\textsc{CSC's} \climatedge reports service offers the financial, utilities and agriculture risk industries a view into climate prediction based on proprietary analysis of public data. The monthly reports include Global Agriculture, Global Energy, Sugar and Soft Commodities, Grain and Oilseeds, and Energy/Natural Gas\cite{climatedgeurl}. The current method of generating these reports takes a high level cursory analysis and only analyzes a fraction of the data that is available. By applying \index{big data} storage and analytics technologies, I will show that \textsc{CSC} can quantitatively analyze more data and modernize the production of \climatedge reports. The resulting climate models will have greater confidence and be of more value to our customers.\\
+\textsc{CSC's} \climatedge reports service offers the financial, utilities and agriculture risk industries a view into climate prediction based on proprietary analysis of public data. The monthly reports include Global Agriculture, Global Energy, Sugar and Soft Commodities, Grain and Oilseeds, and Energy/Natural Gas\cite{climatedgeurl}. The current method of generating these reports takes a high level cursory analysis and only analyzes a fraction of the data that is available. By applying big data \index{big data} storage and analytics technologies, I will show that \textsc{CSC} can quantitatively analyze more data and modernize the production of \climatedge reports. The resulting climate models will have greater confidence and be of more value to our customers.\\
 
 \climatedge reports are based off knowledge acquired by programmatically parsing and summarizing the \gls{html} interface of the Giovanni\cite{giovanni} portal to the NASA \gls{merra} data site.  A \textsc{CSC} \gls{sme} then takes this data collection, adds analysis and annotations, and generates a \gls{pdf} report which details the risk potential thirty to sixty days in the future. In contrast, typical industry reports focus on seven to fourteen days in the future. There are a few drawbacks with this approach:
 \begin{itemize}
@@ -15,18 +15,17 @@
     \item{reports are generated per industry rather than per customer}
     \item{reports are resource intensive to produce}
 \end{itemize}
-I hypothesize that if \textsc{CSC} were to ingest the \gls{merra} archive, as well as other publicly available data sets, into a corporately managed data store with an analytical layer above, we could eliminate the dependency on NASA's Giovanni summary interface, as well as expanding the capabilities offered by \climatedge. By utilizing results based on analytics computed over the entire data set, we could add a quantitative probability to the existing qualitative analysis of \climatedge prediction reports. The technology, skills, and infrastructure used in the creation of the proprietary \gls{merra} solution, would be transferable to other big data projects within the company as a whole.\\
+I hypothesize that if \textsc{CSC} were to ingest the \gls{merra} archive, as well as other publicly available data sets, into a corporately managed data store with an analytical layer above, we could eliminate the dependency on NASA's Giovanni summary interface, as well as expand the capabilities offered by \climatedge into new market segments. By utilizing results based on analytics computed over the entire data set, we could add a quantitative probability to the existing qualitative analysis of \climatedge prediction reports. The technology, skills, and infrastructure used in the creation of the proprietary \gls{merra} solution, would be transferable to other big data projects within the company as a whole.\\
 
-
-CNK -we need to say something here about prediction
-
-
-Implementing a quantitative analysis component in a \ce service allows for several competitive advantages:
+Implementing a predictive quantitative analysis component in a \ce service allows for competitive advantages over the existing approaches:
 \begin{itemize}
-    \item{the ingestion of additional datasets such as \textsc{ENSO}, \textsc{NAO/AO}, and \textsc{PDO}\cite[p. 1]{methods}}
-    \item{the ability to organize the data on a per-solution basis, e.g., by time, by geographical location, etc}
-    \item{the ability to scale the solution to the customer, e.g., faster reports cost more}
-    \item{unique customer portals with the ability to generate reports on demand}
+    \item{the ingestion of additional datasets such as \textsc{ENSO}, \textsc{NAO/AO}, and \textsc{PDO} adds more detail\cite[p. 1]{methods}}
+    \item the ability to organize and retrieve data for visualization and exploration, e.g., by time, by geographical location, by specific measurement, etc
+\end{itemize}
+Additionally, once we have a quantitative platform capable of storing and analyzing heterogeneous climate data sets, we can go one step further in terms of offering this as a service:
+\begin{itemize}
+    \item{the ability to scale solution delivery to the customer, e.g., on-demand analytics and reporting, etc}
+    \item{unique customer portals with industry focused data sets}
 \end{itemize}
 In conversations with Dr. Christopher Anderson and Dr. Dan Walker, I have identified three use cases in which a \ce service can benefit the risk insurance industry[personal communication, 2013]:
 \begin{itemize}
@@ -47,4 +46,3 @@ The current implementation of \climatedge can not address either of these variab
 \bibliographystyle{plain}
 \bibliography{chapter1}
 %\endgroup
-
