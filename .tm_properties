@@ -2,10 +2,11 @@
 projectDirectory	= "$CWD"
 windowTitle			= "$TM_DISPLAYNAME - Thesis"
 
-# used for LaTEX
+# variables
 PATH				= "$PATH:/usr/texbin"
 
 # get rid of all the crap on the file browser
 excludeFiles		= "{*.aux,*.pdf,*.gz,*.log,*.fls,*.fdb_latexmk,*.out,*.xdv,*.blg,*.bbl}"
+
 [ LaTeX ]
 spellChecking 		= true
