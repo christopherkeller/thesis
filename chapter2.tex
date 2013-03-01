@@ -7,14 +7,14 @@
 
 \chapter{Case Study}
 \section*{Tornado}
-A primary carrier of property and casualty insurance would potentially be very interested in knowing the probability of tornado occurrence in geographical areas in which they have a large customer base. There are two months in the year which kick off tornado season in the United States: the warm season starting in March, and the cold season starting in November. Having accurate predictions of weekly seasonal tornado counts months in advance, would constitute a significant business advantage over competitors. There are two specific business cases for the property carrier to focus on:
+A primary carrier of property and casualty insurance would potentially be very interested in knowing the probability of tornado occurrence in geographical areas in which they have a large customer base. There are two months in the year which kick off tornado season in the United States: the warm season starting in March, and the cold season starting in November. Having accurate predictions of weekly seasonal tornado counts, months in advance, would constitute a significant business advantage over competitors. There are two specific business cases for the property carrier to focus on:
 \begin{itemize}
     \item an actuary who will use the historical year-to-year probability and future counts to create overlays based on parcel level policy and claims data on a 50km x 50km geographical grid
     \item an underwriter who will use actuarial information to create the appropriate terms and rates offering for their customers that maximizes revenues at the lowest risk level
 \end{itemize}
-A working group, consisting of Dr. Christopher Anderson, Dr. Dan Walker, and myself, has determined that the data layer for tornado prediction should contain the following [unpublished, 2013]:
+A working group, consisting of Dr. Christopher Anderson, Dr. Dan Walker, and myself, has determined that the data layer for tornado prediction should contain the following data sets [unpublished, 2013]:
 \begin{itemize}
-    \item \gls{merra} 3D historical data set\cite{mdisc}
+    \item \gls{merra} 3D historical\cite{mdisc}
     \item \gls{soi} historical archives\cite{bom}
     \item \gls{tvs} and \gls{mda}\cite{hdss} 
     \item \gls{ncdc} historical tornado report\cite{ncdc}
@@ -44,33 +44,28 @@ Once the data has arrived on the local system, it needs to processed and inserte
 	\item Horizontally scale (as linearly as possible) in storage and performance
 	\item support realtime and batch analytics
 \end{itemize}
-There exists a top level Apache Hadoop project called Cassandra\cite{cassandra} that fulfills the requirements listed above. Within the data store implementation itself, we can use the following generic model for storing any piece of climate data.
+There exist several technologies in the top level Apache Hadoop project, one being Cassandra\index{Cassandra}, which fulfill the requirements listed above\cite{cassandra}. There of competing technologies from commercial vendors like EMC, IBM, Intel, SAS, and Oracle, just to name a few, who have similar technologies designed to store and index vast amounts of data. Regardless of technology, within the data store implementation, we can use the following generic key-value model for storing any piece of climate data.
 \begin{table}[htbp]
 	\caption*{Climate Data Model}
 	\centering
 	\begin{tabular}{l l}
 		\hline
-		What & Description \\ [0.5ex]
+		Key & Value \\ [0.5ex]
 		%heading
 		\hline
-		meta-data & what the measurement represents, i.e., total precipitation\\
+		meta-data & what the measurement represents, i.e., total precipitation or soil moisture\\
 		time & time and date of measurement in UTC, i.e., YYYY-MM-DD HH:MM:SS\\
 		coordinates & geographic location in latitude and longitude, i.e. -90.0 to 90.0 and -180.0 to 180.0\\
 		value & measurement value, i.e. 0.000052977\\
 		\hline
 	\end{tabular}
 \end{table}
-
-With this simple structure and materialized views \index{materialized views}\cite{materialized_views}, we enable analytics based on any combination of the following searches:
-
-temporal 
-geospatial
-variable
+With this simple structure and specific materialized views \index{materialized views}\cite{materialized_views}, we enable analytics based on any combination of the following searches: temporal, geospatial, or by meta-data.
 
 \subsection*{Discovery and Analytics}
+The technology behind big data storage is really only interesting to engineers. What we want are the results of the stored data analysis. For tornado prediction, the specific analytic we'd produce is a 50km x50km (based on data set granularity) geo-spatial grid of predictions of the probability of tornado occurrences expressed as a Poisson distribution[unpublished, 2013]. . This analytic would be computed twice a year in the months leading up to the tornado season in order to give the carriers enough time to react to the data. The \\
 
 \subsection*{Presentation}
-dfkajdflkajsdf;lkasjdf;aklsdfja;lskdfjasdf\\
 
 \begin{figure}[htbp]
     \centering
