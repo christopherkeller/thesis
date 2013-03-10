@@ -14,20 +14,28 @@ A primary carrier of property and casualty insurance would potentially be very i
 \end{itemize}
 A working group, consisting of Dr. Christopher Anderson, Dr. Dan Walker, and myself, has determined that the data layer for tornado prediction should contain the following data sets [unpublished, 2013]:
 \begin{itemize}
-    \item 2.5 TB of \gls{merra} 3D historical \cite{mdisc}
     \item 1 MB of \gls{soi} historical archives \cite{bom}
     \item 100 MB of \gls{tvs} and \gls{mda} \cite{hdss}
     \item 1.5 TB of \gls{ncdc} historical tornado report \cite{ncdc}
 \end{itemize}
-All of this data is in the public domain and freely available to anyone that has the resources to store and analyze it. As mentioned in chapter one, currently CSC uses only the summary information provided by Giovanni in the \climatedge product. While Giovanni has the advantage of requiring no local computational resources, it represents the tip of the proverbial data iceberg and does not help in quantitative prediction.\\
-
-Combinations of the data sets listed above can vary in size from a few hundred gigabytes to a few hundred terabytes just for the raw data. In order to quantitatively process this data, we need a service platform capable of performing the following operational layers:
+All of this data is in the public domain and freely available to anyone that has the resources to store and analyze it. As mentioned in chapter one, currently CSC uses only the summary information provided by Giovanni in the \climatedge product. While Giovanni has the advantage of requiring no local computational resources, it represents the tip of the proverbial data iceberg and does not help in quantitative prediction. Dr. Anderson has speculated that there exist variables stored within the three dimensional \gls{merra} archives that can be utilized to further improve prediction. This additional data would be:
+\begin{itemize}
+    \item 2.5 TB of \gls{merra} 3D historical \cite{mdisc}
+\end{itemize}
+The entirety of the data sets listed above can vary in size from a few hundred gigabytes to a few terabytes just for the raw data. In order to quantitatively process this data, we need a service platform capable of performing the following operational layers:
 \begin{itemize}
 	\item retrieving data updates
 	\item storing and indexing for optimal retrieval
 	\item data discovery and analytics
 	\item presenting real-time and offline results
 \end{itemize}
+We can represent each layer graphically, building on the layer to its left. 
+\begin{figure}[htp]
+    \centering
+%    \caption*{Data flow by layer}
+    \includegraphics[scale=.75]{dataflow}
+\end{figure}
+
 \subsection*{Data Acquisition}
 As all the data is freely available via standard HTTP requests, we simply need to put together a framework consisting of a repeatable process that polls each website for newly published data and retrieves it. If necessary, the framework can check with the data store to confirm what's new and what's not. Putting together such a framework is a relatively simple systems integration and development task and has plenty of prior art across the industry. I'd recommend the following components:
 \begin{itemize}
@@ -63,15 +71,12 @@ There exist several technologies in the top level Apache Hadoop project, one bei
 With this simple structure and specific materialized views \index{materialized views}\cite{materialized_views}, we enable analytics based on any combination of the following searches: temporal, geospatial, or by meta-data.
 
 \subsection*{Discovery and Analytics}
-The technology behind big data storage is really only interesting to engineers. What we want are the results of the stored data analysis. For tornado prediction, the specific analytic we'd produce is a 50km x50km (based on data set granularity) geo-spatial grid of predictions of the probability of tornado occurrences expressed as a Poisson distribution[unpublished, 2013]. . This analytic would be computed twice a year in the months leading up to the tornado season in order to give the carriers enough time to react to the data. The \\
+The technology behind big data storage is really only interesting to engineers. What we want are the results of the stored data analysis. For tornado prediction, the specific analytic we'd produce is a 50km x50km (based on input data granularity) geo-spatial grid of predictions of the probability of tornado occurrences expressed as a Poisson distribution [unpublished, 2013]. This analytic would be computed twice a year in the months leading up to the tornado season in order to give the carriers enough time to react to the data.
 
 \subsection*{Presentation}
+It's possible to represent the resulting Poisson distribution in a number of ways, either textually or graphically. While an interactive \gls{html} geographical map may best present the results for human consumption, the goal should be to get the information into a system capable of overlaying it with parcel and policy data so as to present a complete picture for decision making. CSC has a policy administration tool for insurance carriers known as POINT IN \cite{point_in}. This product is widely used, making it an ideal platform to ingest the results of our predictive analytics as serialized XML containing the Poisson probabilities for each geographical grid.\\
 
-\begin{figure}[htbp]
-    \centering
-%    \caption*{Data flow by layer}
-    \includegraphics[scale=.9]{dataflow}
-\end{figure}
+At this point, we have a fully automated platform capable of generating predictive analytics twice a year and delivering those results electronically into an industry standard administration platform. With the future tornado probabilities by grid location, combined with the parcel and policy information, the insurance carriers now have ability to make fundamental business decisions such as: do we have enough funds to cover expected losses, do we renew policies for high probability areas, is predicted income balanced against probable risk, as well as giving another data point against fraudulent damage claims. 
 
 %\begingroup
     % this removes the chapter title for the in-chapter bibliography
