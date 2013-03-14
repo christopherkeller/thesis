@@ -1,5 +1,5 @@
 %TEX TS-program = xelatex
-\documentclass[11pt, twoside, openright]{book}
+\documentclass[11pt]{article}
 \usepackage[margin=2.54cm]{geometry} % set margins to 1 inch all the way around
 \usepackage{fontspec}
 	\defaultfontfeatures{Ligatures=TeX}
@@ -8,18 +8,24 @@
 	\setmainfont{Kepler Std Light}
 	\setsansfont[Mapping=tex-text]{Myriad Pro}
 	\setmonofont[Scale=MatchLowercase]{Anonymous Pro}
+
+% set line spacing to 1.5
+\usepackage{setspace}
+    \onehalfspacing 
+
+\setlength{\parindent}{0pt} % don't indent paragraphs globally
+
 \usepackage{titlesec}
-\titleformat{\chapter}[display]
-    {\huge\bfseries\sffamily}{\chaptertitlename\ \thechapter}{20pt}{\Large}[\titlerule]
-%this would be used to change section headings
-%\titleformat{\section}{\Large\bfseries\sffamily}    
+    \titleformat{\section}{\Large\bfseries\sffamily}{\thesection}{1em}{}
+    \titleformat{\subsection}{\large\bfseries\sffamily}{\thesubsection}{1em}{}
+
 % set up indexing for all the acronyms
 \usepackage{makeidx}
-\makeindex
+    \makeindex
 \usepackage[acronym,toc]{glossaries}
-\makeglossaries
+    \makeglossaries
 \usepackage{graphicx}   % this handles the non-native charts
-\usepackage[sectionbib]{chapterbib} % this handles references per chapter
+%\usepackage[sectionbib]{chapterbib} % this handles references per chapter
 % this handles the risk equation -- may not be necessary
 %\usepackage{amsmath}
 
@@ -28,28 +34,30 @@
 \PassOptionsToPackage{hyphens}{url}\usepackage{hyperref}
 \renewcommand{\UrlBreaks}{\do\/\do\a\do\b\do\c\do\d\do\e\do\f\do\g\do\h\do\i\do\j\do\k\do\l\do\m\do\n\do\o\do\p\do\q\do\r\do\s\do\t\do\u\do\v\do\w\do\x\do\y\do\z\do\A\do\B\do\C\do\D\do\E\do\F\do\G\do\H\do\I\do\J\do\K\do\L\do\M\do\N\do\O\do\P\do\Q\do\R\do\S\do\T\do\U\do\V\do\W\do\X\do\Y\do\Z} % this handles breaking URLS smartly
 \usepackage{enumitem}
-\usepackage{setspace}
-    \onehalfspacing % set line spacing to 1.5
-    
+
 %\newcommand\smallcaps[1]{{\footnotesize\textbf{#1}}}
 \newcommand\climatedge{ClimatEdge\texttrademark{} }
 \newcommand\ce{ClimatEdge 2.0 }
 
+\setcounter{tocdepth}{2} % table of contents include subsections
 %\setlist{nolistsep}
-\pagestyle{empty}
-\setlength{\parindent}{0pt} % don't indent paragraphs globally
+%\pagestyle{empty}
 
 \begin{document}
-	\include{title}
+    \input{title}
     \tableofcontents
-	\include{chapter1}
-	\include{chapter2}
-	\include{chapter3}
-    \include{chapter4}
-    \include{chapter5}
-	\include{appendix}
+    \clearpage
+    \input{executive_summary}
+    \input{introduction}
+    \input{tornado}
+%    \include{chapter3}
+%    \include{chapter4}
+%    \include{chapter5}
+    \include{appendix}
+    \bibliographystyle{plain}
+    \bibliography{bibliography}
     \printglossaries
     \clearpage
-    \addcontentsline{toc}{chapter}{Index}
+    \addcontentsline{toc}{section}{Index}
     \printindex
 \end{document} 

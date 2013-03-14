@@ -1,12 +1,12 @@
 %!TEX root=index.tex
-
 % establish that there is a business problem and the hypothesis should solve it
 % maybe 1-1.5 pages
 \newacronym{merra}{MERRA}{Modern-Era Retrospective analysis for Research and Applications}
 \newacronym{html}{HTML}{Hyper Text Markup Language}
 \newacronym{sme}{SME}{Subject Matter Expert}
 \newacronym{pdf}{PDF}{Portable Document Format}
-\section*{Introduction}
+
+\section{Introduction}
 Everywhere we turn, the big data movement is changing how industries are collecting, analyzing, and responding to the data around them. Efforts, by the Korean Meteorological Administration, are underway to upgrade the ability to predict weather patterns and the severity of weather events across the South Korean peninsula. IBM is engaged in similar work in New York City and Rio de Janeiro, in preparation for the 2014 Olympiad, with goals of accurately predicting short term weather\cite{rwe}. What if the vast repositories of weather and climate data could be collected, stored, and analyzed by current distributed processing algorithms to produce climate predictions months, not weeks, in advance?\\
 
 \textsc{CSC's} \climatedge reports service offers the financial, utilities and agriculture risk industries a view into climate prediction based on proprietary analysis of public data. The monthly reports include Global Agriculture, Global Energy, Sugar and Soft Commodities, Grain and Oilseeds, and Energy/Natural Gas\cite{climatedgeurl}. The current method of generating these reports takes a high level cursory analysis and only analyzes a fraction of the data that is available. By applying big data \index{big data} storage and analytics technologies, I will show that \textsc{CSC} can quantitatively analyze more data and modernize the production of \climatedge reports. The resulting climate models will have greater confidence and be of more value to our customers.\\
@@ -19,9 +19,6 @@ Everywhere we turn, the big data movement is changing how industries are collect
 % we asume this info is adequate to determine there is a need on the part of the client, so we're going to focus on how we would do this
 % what will people buy and what's it take to deliver it <--- this is really important
 
-
-
-
 \climatedge reports are based off knowledge acquired by programmatically parsing and summarizing the \gls{html} interface of the Giovanni\cite{giovanni} portal to the NASA \gls{merra} data site.  A \textsc{CSC} \gls{sme} then takes this data collection, adds analysis and annotations, and generates a \gls{pdf} report which details the risk potential thirty to sixty days in the future. In contrast, typical industry reports focus on seven to fourteen days in the future. There are a few drawbacks with this approach:
 \begin{itemize}
     \item{limits the data acquisition to only that summary information that the Giovanni \index{Giovanni} maintainers choose to expose, rather than the raw data itself}
@@ -32,9 +29,7 @@ Everywhere we turn, the big data movement is changing how industries are collect
 %these bullets dont' specify that they are qualitative
 
 
-I hypothesize that if \textsc{CSC} were to ingest the \gls{merra} archive, as well as other publicly available data sets, into a corporately managed data store with an analytical layer above, we could eliminate the dependency on NASA's Giovanni summary interface, as well as expand the capabilities offered by \climatedge into new market segments. By utilizing results based on analytics computed over the entire data set, we could add a quantitative probability to the existing qualitative analysis of \climatedge prediction reports. The technology, skills, and infrastructure used in the creation of the proprietary \gls{merra} solution, would be transferable to other big data projects within the company as a whole.\\
-
-% remove personal pronouns
+If \textsc{CSC} were to ingest the \gls{merra} archive, as well as other publicly available data sets, into a corporately managed data store with an analytical layer above, we could eliminate the dependency on NASA's Giovanni summary interface, as well as expand the capabilities offered by \climatedge into new market segments. By utilizing results based on analytics computed over the entire data set, we could add a quantitative probability to the existing qualitative analysis of \climatedge prediction reports. The technology, skills, and infrastructure used in the creation of the proprietary \gls{merra} solution, would be transferable to other big data projects within the company as a whole.\\
  
 %CSC has already decided to move into new market segments, this opens up tornado analytics
 
@@ -74,5 +69,6 @@ The current implementation of \climatedge can not address either of these variab
 %    \renewcommand{\chapter}[2]{}% for other classes
 %\renewcommand\bibname{{References}}
 %\bibliographystyle{plain}
-%\bibliography{chapter1}
+%\bibliography{chapter2}
 %\endgroup
+% Review of the sources: internet, C3, books, etc plus interview with the experts
