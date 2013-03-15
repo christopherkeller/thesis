@@ -4,90 +4,29 @@
 \newacronym{soi}{SOI}{Southern Oscillation Index}
 \newacronym{tvs}{TVS}{National Tornado Vortex Signature}
 \newacronym{mda}{MDA}{National Mesoscyclone Detection Algorithm}
+\newacronym{nosql}{NoSQL}{Not only SQL}
 
 \section{Case Study: Tornado}
-
-CNK - why am i focusing on tornado (dan provides research). There are some hail modesl on the market for catosptrophic risk 
-
-A primary carrier of property and casualty insurance would potentially be very interested in knowing the probability of tornado occurrence in geographical areas in which they have a large customer base. There are two months in the year which kick off tornado season in the United States: the warm season starting in March, and the cold season starting in November. Having accurate predictions of weekly seasonal tornado counts, months in advance, would constitute a significant business advantage over competitors. There are two specific business cases for the property carrier to focus on:
+One business opportunity, currently being pursued by the CSC Data Services group, is tornado prediction within the United States. (CNK - why?) A primary carrier of property and casualty insurance would potentially be very interested in knowing the probability of tornado occurrence in geographical areas in which they have a large customer base. There are two months in the year which kick off tornado season in the United States: the warm season starting in March, and the cold season starting in November. Having accurate predictions of weekly seasonal tornado counts, months in advance, would constitute a significant business advantage over competitors. There are two specific business cases for the property carrier to focus on:
 \begin{itemize}
     \item an actuary who will use the historical year-to-year probability and future counts to create overlays based on parcel level policy and claims data on a 50km x 50km geographical grid
     \item an underwriter who will use actuarial information to create the appropriate terms and rates offering for their customers that maximizes revenues at the lowest risk level
 \end{itemize}
-
-CNK analyst said underwriter is better than actuary
-
-A working group, consisting of Dr. Christopher Anderson, Dr. Dan Walker, and myself, has determined that the data layer for tornado prediction should contain the following data sets [unpublished, 2013]:
+An industry analyst, working with CSC, identified the actuary as the primary business target [unpublished interview, 2013]. In order to produce the specific analysis for the actuary, CSC employee Dr. Dan Walker and part-time employee Dr. Christopher Anderson have determined that the necessary data sets for tornado prediction should contain the following [unpublished interview, 2013]:
 \begin{itemize}
     \item 1 MB of \gls{soi} historical archives \cite{bom}
     \item 100 MB of \gls{tvs} and \gls{mda} \cite{hdss}
     \item 1.5 TB of \gls{ncdc} historical tornado report \cite{ncdc}
 \end{itemize}
-All of this data is in the public domain and freely available to anyone that has the resources to store and analyze it. As mentioned in chapter one, currently CSC uses only the summary information provided by Giovanni in the \climatedge product. While Giovanni has the advantage of requiring no local computational resources, it represents the tip of the proverbial data iceberg and does not help in quantitative prediction. Dr. Anderson has speculated that there exist variables stored within the three dimensional \gls{merra} archives that can be utilized to further improve prediction. This additional data would be:
+All of this data is in the public domain and freely available to anyone that has the resources to store and analyze it. As mentioned previously,  CSC currently uses only the summary information provided by Giovanni in the \climatedge product. While Giovanni has the advantage of requiring no local computational resources, it represents the tip of the proverbial data iceberg and does not help in quantitative prediction necessary for a tornado solution. Dr. Anderson has speculated that there exist variables stored within the three dimensional \gls{merra} archives that can be utilized to further improve prediction. This additional data would be:
 \begin{itemize}
     \item 2.5 TB of \gls{merra} 3D historical \cite{mdisc}
 \end{itemize}
-The entirety of the data sets listed above can vary in size from a few hundred gigabytes to a few terabytes just for the raw data. In order to quantitatively process this data, we need a service platform capable of performing the following operational layers:
-\begin{itemize}
-	\item retrieving data updates
-	\item storing and indexing for optimal retrieval
-	\item data discovery and analytics
-	\item presenting real-time and offline results
-\end{itemize}
-We can represent each layer graphically, building on the layer to its left. 
-\begin{figure}[htp]
-    \centering
-%    \caption*{Data flow by layer}
-    \includegraphics[scale=.75]{dataflow}
-\end{figure}
+\subsection{Objective}
+For tornado prediction, the specific analytic we'd produce is a 50km x50km (based on input data granularity) geo-spatial grid of predictions of the probability of tornado occurrences expressed as a Poisson distribution \cite{anderson}. This analytic would be computed twice a year in the months leading up to the tornado season in order to give the carriers enough time to react to the data and to take into account recent data. It's possible to represent the resulting Poisson distribution in a number of ways, either textually or graphically. While an interactive \gls{html} geographical map may best present the results for human consumption, the goal should be to get the information into a system capable of overlaying it with parcel and policy data so as to present a complete picture for decision making. CSC has a policy administration tool for insurance carriers known as POINT IN \cite{point_in}. This product is widely used, making it an ideal platform to ingest the results of our predictive analytics as serialized XML containing the Poisson probabilities for each geographical grid.\\
 
-\subsection{Data Acquisition}
-As all the data is freely available via standard HTTP requests, we simply need to put together a framework consisting of a repeatable process that polls each website for newly published data and retrieves it. If necessary, the framework can check with the data store to confirm what's new and what's not. Putting together such a framework is a relatively simple systems integration and development task and has plenty of prior art across the industry. I'd recommend the following components:
-\begin{itemize}
-	\item Three Linux instances to handle retrieval, monitoring, and hosting the source code repository, respectively.
-	\item A continuous integration tool, Jenkins or similar, for continually monitoring and notifying the success or failure of the retrieval processes (one per data set). Jenkins will also serve as the means to deploy the most recent code from the code repository onto the server handling the retrieval process. Jenkins is open source and used commonly across the industry for this purpose, resulting in an easily hirable skill set \cite{jenkins}.
-	\item A repeatable method, such as Cron, to check and retrieve updated data sets at well defined publication intervals. Jenkins will monitor the success or failure of the cron jobs and notify as needed.
-	\item Developed code that contacts each web server and pulls down only the most recent data. If the data sets do not offer a simple means of determining what's recent, this code can query the data store so that it's aware of the last stored data. While we need unique code for each data set, the process of determining what's new and retrieving the code should be very similar across all the data sets. It's likely there will a reusable common library of functionality across each specific implementation. This development is likely to be done in a scriptable environment such as Python or Perl. The languages offer an excellent tradeoff between simplicity, flexibility, and execution speed.
-\end{itemize}
+\subsection{Implementation}
+While the entirety of the data sets listed above can vary in size from a few hundred gigabytes to a few terabytes when you include in the research and development efforts to reduce uncertainty, it does not fit the accepted big data model. In a guest blog post, Michael Stonebraker gives four detailed definitions to the term big data\index{big data}\cite{stonebraker}. He boils it down to the same basic concepts that most of the non-technical world uses: velocity, volume, and variety. Even with data volumes approaching several terabytes, tornado prediction does not conform to the accepted criteria for big data. While it is certainly possible to process this data using a \gls{nosql} data store such as Cassandra \cite{cassandra} or HBase \cite{Hbase}, it is not a requirement, or even necessary. An efficient distributed processing algorithm, such as Map Reduce \cite{mapreduce} will be able to easily handle data sets of this size and generate the data necessary to compute the Poisson distribution.
 
-\subsection{Storing and Indexing}
-Once the data has arrived on the local system, it needs to processed and inserted into the data store. This layer is the heart of any service offering. The data store must have the following characteristics:
-\begin{itemize}
-	\item Not inherently possess a single point of failure
-	\item Horizontally scale (as linearly as possible) in storage and performance
-	\item support realtime and batch analytics
-\end{itemize}
-There exist several technologies in the top level Apache Hadoop project, one being Cassandra\index{Cassandra}, which fulfill the requirements listed above\cite{cassandra}. There of competing technologies from commercial vendors like EMC, IBM, Intel, SAS, and Oracle, just to name a few, who have similar technologies designed to store and index vast amounts of data. Regardless of technology, within the data store implementation, we can use the following generic key-value model for storing any piece of climate data.
-\begin{table}[htbp]
-	\caption*{Climate Data Model}
-	\centering
-	\begin{tabular}{l l}
-		\hline
-		Key & Value \\ [0.5ex]
-		%heading
-		\hline
-		meta-data & what the measurement represents, i.e., total precipitation or soil moisture\\
-		time & time and date of measurement in UTC, i.e., YYYY-MM-DD HH:MM:SS\\
-		coordinates & geographic location in latitude and longitude, i.e. -90.0 to 90.0 and -180.0 to 180.0\\
-		value & measurement value, i.e. 0.000052977\\
-		\hline
-	\end{tabular}
-\end{table}
-With this simple structure and specific materialized views \index{materialized views}\cite{materialized_views}, we enable analytics based on any combination of the following searches: temporal, geospatial, or by meta-data.
 
-\subsection{Discovery and Analytics}
-The technology behind big data storage is really only interesting to engineers. What we want are the results of the stored data analysis. For tornado prediction, the specific analytic we'd produce is a 50km x50km (based on input data granularity) geo-spatial grid of predictions of the probability of tornado occurrences expressed as a Poisson distribution [unpublished, 2013]. This analytic would be computed twice a year in the months leading up to the tornado season in order to give the carriers enough time to react to the data.
 
-\subsection{Presentation}
-It's possible to represent the resulting Poisson distribution in a number of ways, either textually or graphically. While an interactive \gls{html} geographical map may best present the results for human consumption, the goal should be to get the information into a system capable of overlaying it with parcel and policy data so as to present a complete picture for decision making. CSC has a policy administration tool for insurance carriers known as POINT IN \cite{point_in}. This product is widely used, making it an ideal platform to ingest the results of our predictive analytics as serialized XML containing the Poisson probabilities for each geographical grid.\\
-
-At this point, we have a fully automated platform capable of generating predictive analytics twice a year and delivering those results electronically into an industry standard administration platform. With the future tornado probabilities by grid location, combined with the parcel and policy information, the insurance carriers now have ability to make fundamental business decisions such as: do we have enough funds to cover expected losses, do we renew policies for high probability areas, is predicted income balanced against probable risk, as well as giving another data point against fraudulent damage claims. 
-
-%\begingroup
-    % this removes the chapter title for the in-chapter bibliography
-%    \renewcommand{\chapter}[2]{}% for other classes
-%\renewcommand\bibname{{References}}
-%\bibliographystyle{plain}
-%\bibliography{chapter2}
-%\endgroup
-% Review of the sources: internet, C3, books, etc plus interview with the experts
