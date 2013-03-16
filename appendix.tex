@@ -1,0 +1,26 @@
+%!TEX root=index.tex
+\section{Appendix}
+\newfontfamily{\anonymous}[Scale=MatchLowercase]{Anonymous Pro}
+\lstset{ %
+    language=C,                             % Code langugage
+    basicstyle=\anonymous,
+    tabsize=2,
+    breaklines=true,
+    breakatwhitespace=false,
+    showstringspaces=false,
+    showtabs=false
+}
+Listed below is C code that very quickly processes a \gls{merra} data file and stores it within a simple SQLite database \cite{keller} Every data type would have a similar parser.
+\lstinputlisting{/Users/christopher/Documents/work/Climatalytics/prototype/source/merra/c/geo_point.h}
+\hrule
+\lstinputlisting{/Users/christopher/Documents/work/Climatalytics/prototype/source/merra/c/merra_regex.h}
+\hrule
+\lstinputlisting{/Users/christopher/Documents/work/Climatalytics/prototype/source/merra/c/merra_regex.c}
+\hrule
+\lstinputlisting{/Users/christopher/Documents/work/Climatalytics/prototype/source/merra/c/sql.h}
+\hrule
+\lstinputlisting{/Users/christopher/Documents/work/Climatalytics/prototype/source/merra/c/sql.c}
+\hrule
+\lstinputlisting{/Users/christopher/Documents/work/Climatalytics/prototype/source/merra/c/latlon.c}
+\hrule
+\lstinputlisting{/Users/christopher/Documents/work/Climatalytics/prototype/source/merra/c/main.c}
