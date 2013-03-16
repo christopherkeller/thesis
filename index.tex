@@ -9,6 +9,8 @@
 	\setsansfont[Mapping=tex-text]{Myriad Pro}
 	\setmonofont[Scale=MatchLowercase]{Anonymous Pro}
 
+\renewcommand{\ttdefault}{mf}
+
 % set line spacing to 1.5
 \usepackage{setspace}
     \onehalfspacing 
@@ -43,6 +45,10 @@
 %\setlist{nolistsep}
 %\pagestyle{empty}
 
+% handle code formatting for the appendix
+\usepackage{listings}
+
+
 \begin{document}
     \input{title}
     \tableofcontents
@@ -50,16 +56,15 @@
     \input{executive_summary}
     \input{introduction}
     \input{tornado}
-	\input{flood}
-	\input{solution}
-%    \include{chapter3}
-%    \include{chapter4}
-%    \include{chapter5}
+    \input{flood}
+    \input{solution}
+    \input{future}
+    \input{conclusion}
     \include{appendix}
     \bibliographystyle{plain}
     \bibliography{bibliography}
     \printglossaries
-    \clearpage
+%    \clearpage
     \addcontentsline{toc}{section}{Index}
     \printindex
 \end{document} 

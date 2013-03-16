@@ -9,66 +9,20 @@
 \section{Introduction}
 Everywhere we turn, the big data movement is changing how industries are collecting, analyzing, and responding to the data around them. Efforts, by the Korean Meteorological Administration, are underway to upgrade the ability to predict weather patterns and the severity of weather events across the South Korean peninsula. IBM is engaged in similar work in New York City and Rio de Janeiro, in preparation for the 2014 Olympiad, with goals of accurately predicting short term weather\cite{rwe}. What if the vast repositories of weather and climate data could be collected, stored, and analyzed by current distributed processing algorithms to produce climate predictions months, not weeks, in advance?\\
 
-\textsc{CSC's} \climatedge reports service offers the financial, utilities and agriculture risk industries a view into climate prediction based on proprietary analysis of public data. The monthly reports include Global Agriculture, Global Energy, Sugar and Soft Commodities, Grain and Oilseeds, and Energy/Natural Gas\cite{climatedgeurl}. The current method of generating these reports takes a high level cursory analysis and only analyzes a fraction of the data that is available. By applying big data \index{big data} storage and analytics technologies, I will show that \textsc{CSC} can quantitatively analyze more data and modernize the production of \climatedge reports. The resulting climate models will have greater confidence and be of more value to our customers.\\
+\textsc{CSC's} original \climatedge  service offered forward looking reports  to commodities markets. The reports were compiled with a cursory qualitative analysis of the NASA \gls{merra}  data with commentary by subject matter experts in climate sciences. The monthly reports included Global Agriculture, Global Energy, Sugar and Soft Commodities, Grain and Oilseeds, and Energy/Natural Gas\cite{climatedgeurl}. Interviews conducted with various people associated with the original [and current] \climatedge offering hinted that the product was not marketed well by \textsc{CSC} and subsequently, did not fare well.\\
 
-%^--- csc made a strageic decision to move away from this business model, ie this is the old version. 
-% climatedg1 1.0 qualitative reports for commodities traders closed down and why (anne marie)
-%    annie marie can provide logic on why that is
-% 2.0 is a pivot and we're working on quantitative prediction for general insurance
-% the pivot supports that qualitative portion of my hypothesis doesn't work
-% we asume this info is adequate to determine there is a need on the part of the client, so we're going to focus on how we would do this
-% what will people buy and what's it take to deliver it <--- this is really important
-
-\climatedge reports are based off knowledge acquired by programmatically parsing and summarizing the \gls{html} interface of the Giovanni\cite{giovanni} portal to the NASA \gls{merra} data site.  A \textsc{CSC} \gls{sme} then takes this data collection, adds analysis and annotations, and generates a \gls{pdf} report which details the risk potential thirty to sixty days in the future. In contrast, typical industry reports focus on seven to fourteen days in the future. There are a few drawbacks with this approach:
-\begin{itemize}
-    \item{limits the data acquisition to only that summary information that the Giovanni \index{Giovanni} maintainers choose to expose, rather than the raw data itself}
-    \item{reports are generated per industry rather than per customer}
-    \item{reports are resource intensive to produce}
-\end{itemize}
-
-%these bullets dont' specify that they are qualitative
-
-
-If \textsc{CSC} were to ingest the \gls{merra} archive, as well as other publicly available data sets, into a corporately managed data store with an analytical layer above, we could eliminate the dependency on NASA's Giovanni summary interface, as well as expand the capabilities offered by \climatedge into new market segments. By utilizing results based on analytics computed over the entire data set, we could add a quantitative probability to the existing qualitative analysis of \climatedge prediction reports. The technology, skills, and infrastructure used in the creation of the proprietary \gls{merra} solution, would be transferable to other big data projects within the company as a whole.\\
- 
-%CSC has already decided to move into new market segments, this opens up tornado analytics
-
-
-
-Implementing a predictive quantitative analysis component in a \ce service allows for competitive advantages over the existing approaches:
-\begin{itemize}
-    \item{the ingestion of additional datasets such as \textsc{ENSO}, \textsc{NAO/AO}, and \textsc{PDO} adds more detail [personal communication, 2012]}
-    
-   ENSO, NAO, PDO  these are not data sets, 
-        SOI or sea surface temperature instead of ENSO
-        
-        consider taking this section out since it's in chapter 2
-        
-    
-    \item the ability to organize and retrieve data for visualization and exploration, e.g., by time, by geographical location, by specific measurement, etc
-\end{itemize}
-Additionally, once we have a quantitative platform capable of storing and analyzing heterogeneous climate data sets, we can go one step further in terms of offering this as a service:
-\begin{itemize}
-    \item{the ability to scale solution delivery to the customer, e.g., on-demand analytics and reporting, etc}
-    \item{unique customer portals with industry focused data sets}
-\end{itemize}
-In conversations with Dr. Christopher Anderson and Dr. Dan Walker, I have identified three use cases in which a \ce service can benefit the risk insurance industry [personal communication, 2013]:
-\begin{itemize}
-    \item tornado prediction
-    \item flood prediction
-    \item commodities trading
-\end{itemize}
-By focusing on predictive analytics using large data sets we can use the following equation for the risk insurance industry: CNK - we need to indicate that for this paper we're limiting to tornado
+The following equation can be applied to the general insurance industry business model: 
 \begin{equation*}
     Risk = Impact \cdot Probability
 \end{equation*}
-The current implementation of \climatedge can not address either of these variables.
-
-%\begingroup
-    % this removes the chapter title for the in-chapter bibliography
-%    \renewcommand{\chapter}[2]{}% for other classes
-%\renewcommand\bibname{{References}}
-%\bibliographystyle{plain}
-%\bibliography{chapter2}
-%\endgroup
-% Review of the sources: internet, C3, books, etc plus interview with the experts
+\textsc{CSC} recognized that without a substantial quantitative update, \climatedge could not address the probability of events occurring. \textsc{CSC} then made a strategic decision to focus the second iteration of \climatedge on quantitative prediction. As with the original version, it offers a view into climate prediction based on proprietary analysis of public data. In 2011, the U.S. premiums for property and casualty insurance totaled \$442 billion \cite{iii}. Opportunities exist within this overall market space that \climatedge cannot address without a significant update in how the data is stored, and subsequently analyzed.
+\subsection{Hypothesis}
+Without investing, developing, and applying expertise in big data \index{big data} storage and analytic technologies, future \climatedge offerings will be limited to markets served by processing relatively small and straightforward data sets. By using technologies such as cloud \index{cloud} virtualization, distributed databases, elastic compute and storage, and distributed algorithms, \textsc{CSC} can quantitatively analyze more data and offer \climatedge reporting to an ever increasing number of industries.
+\subsection{Offerings}
+\textsc{CSC's} Data Services group, in conjunction with industry analysts and other internal groups,  has identified several business cases  in which an updated \climatedge offering can benefit the general insurance industry [personal communication, 2013]:
+\begin{itemize}
+    \item tornado prediction
+    \item flood prediction
+    \item hail prediction \& forensics
+\end{itemize}
+ This paper selects the tornado and flood predictive analytics and views them through the lens of big data.
