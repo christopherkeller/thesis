@@ -6,7 +6,7 @@ windowTitle			= "$TM_DISPLAYNAME - Thesis"
 PATH				= "$PATH:/usr/texbin"
 
 # get rid of all the crap on the file browser
-excludeFiles		= "{*.aux,*.pdf,*.gz,*.log,*.fls,*.fdb_latexmk,*.out,*.xdv,*.blg,*.bbl}"
+excludeFiles		= "{*.aux,*.pdf,*.gz,*.log,*.fls,*.fdb_latexmk,*.out,*.xdv,*.blg,*.bbl,*.glo,*.acn,*.ist,*.ilg,*.ind,*.idx,*.toc}"
 
 [ LaTeX ]
 spellChecking 		= true

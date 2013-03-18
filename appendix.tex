@@ -4,13 +4,15 @@
 \lstset{ %
     language=C,                             % Code langugage
     basicstyle=\anonymous,
-    tabsize=2,
+    tabsize=1,
     breaklines=true,
     breakatwhitespace=false,
     showstringspaces=false,
+    showspaces=false,
     showtabs=false
 }
-Listed below is C code that very quickly processes a \gls{merra} data file and stores it within a simple SQLite database \cite{keller} Every data type would have a similar parser.
+Listed below is C code which processes a \gls{merra} data file and stores it within a simple SQLite database \cite{keller1}. Every data type would have a similar parser, typically written in Python for ease of development. However given the complex structure of the \gls{merra} format, combined with the size of the data set, it is reasonable to spend the time to develop it in C to gain execution speed. Processing a single day of \gls{merra} (300MB) and writing into an SQLite flat file takes approximately 20 seconds per variable with the listed code on a modern CPU. Similar code in Python was taking several hours to complete. The entire thirty-three year \gls{merra} archive would take approximately one week to ingest, running in parallel. 
+ 
 \lstinputlisting{/Users/christopher/Documents/work/Climatalytics/prototype/source/merra/c/geo_point.h}
 \hrule
 \lstinputlisting{/Users/christopher/Documents/work/Climatalytics/prototype/source/merra/c/merra_regex.h}
@@ -24,3 +26,15 @@ Listed below is C code that very quickly processes a \gls{merra} data file and s
 \lstinputlisting{/Users/christopher/Documents/work/Climatalytics/prototype/source/merra/c/latlon.c}
 \hrule
 \lstinputlisting{/Users/christopher/Documents/work/Climatalytics/prototype/source/merra/c/main.c}
+\lstset{ %
+    language=Python,                             % Code langugage
+    basicstyle=\anonymous,
+    tabsize=1,
+    breaklines=true,
+    breakatwhitespace=false,
+    showstringspaces=false,
+    showspaces=false,
+    showtabs=false
+}
+A simple mapreduce implementation for word counting in Python is presented below \cite{keller2}.
+\lstinputlisting{/Users/christopher/Development/personal/mapreduce_python/pr.py}
