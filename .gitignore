@@ -1,3 +1,6 @@
+# OS X stuff
+.DS_store
+
 # Various LaTeX by products
 *.aux
 *.gz
