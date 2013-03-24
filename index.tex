@@ -48,6 +48,15 @@
 % handle code formatting for the appendix
 \usepackage{listings}
 
+% modify footer to include disclaimer
+\usepackage{fancyhdr}
+\pagestyle{fancy}
+\fancyhead{}
+\renewcommand{\headrulewidth}{0pt}
+\fancyfoot{}
+\fancyfoot[FR]{\textit{\textsc{CSC} Proprietary and Confidential}}
+\fancyfoot[C]{\thepage}
+
 \begin{document}
     \input{title}
     \tableofcontents

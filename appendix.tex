@@ -13,7 +13,7 @@
 }
 Listed below is C code which processes a \gls{merra} data file and stores it within a simple SQLite database \cite{hdf}. Every data type would have a similar parser, typically written in Python for ease of development. However given the complex structure of the \gls{merra} format, combined with the size of the data set, it is reasonable to spend the time to develop it in C to gain execution speed.  The entire thirty-three year \gls{merra} archive would take approximately one week to ingest as a one time cost, running in parallel. \\
 
-After the \gls{merra} parser, a simple implementation of MapReduce is provided in Python, that demonstrates how a histogram would be calculated based on word occurrences in a text file.  This is the canonical first MapReduce program that someone might produce. It divides the task into both Mapper and Reducer jobs and is designed to run on a single core. More advanced implementations would be run over multiple cores in a distributed cluster.
+After the \gls{merra} parser, a simple implementation of MapReduce is provided in Python that demonstrates how a histogram would be calculated based on word occurrences in a text file.  This is the canonical first MapReduce program that any developer might produce. It divides the task into both Mapper and Reducer jobs and is designed to run on a single core. More advanced implementations would be run over multiple cores on a distributed cluster.
  
 \lstinputlisting{/Users/christopher/Documents/work/Climatalytics/prototype/source/merra/c/geo_point.h}
 \hrule
