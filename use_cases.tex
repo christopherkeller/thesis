@@ -3,113 +3,62 @@
 \newacronym{soi}{SOI}{Southern Oscillation Index}
 \newacronym{tvs}{TVS}{National Tornado Vortex Signature}
 \newacronym{nosql}{NoSQL}{Not only SQL}
-\section{Offerings}
+\newacronym{xml}{XML}{Extensible Markup Language}
+
+\section{Use Cases}
 [ paragraph that explores these]
+Two offerings with sufficiently different data and processing requirements are tornado and flood. While both are similar in  respect that the objective is to produce a probability of occurrence for any given geographical point in the coverage area, the technology required to accomplish this varies greatly. A primary carrier of property and casualty insurance would be very interested in knowing the probability of natural catastrophes in geographical areas in which they have a large customer base. Having accurate predictions of seasonal event probabilities, months in advance, constitutes a significant business advantage over competitors when issuing or renewing premiums. Insurance underwriters will use event probabilities to create the appropriate terms and rates offerings for their customers that maximize revenues at the lowest risk level. [CNK expand Novarica Report, 2013]. [ more advanced discussion of the business model need ]
+    [ how are they going to use our data to make better business decisions] \\
+\subsection{Offering}
+Quantitative predictions for natural catastrophic events such as tornado, hail, or flood can be expressed as a Poisson distribution showing the probability of a given number of events occurring over a fixed interval of time \cite{anderson}. It is possible to represent the resulting Poisson distribution in a number of ways, either textually or graphically. While an interactive \gls{html} geographical map may best present the results visually, the goal is to get the information into a system capable of overlaying it with parcel and policy data so as to present a complete picture for decision making. \textsc{CSC} has two different administration tools for insurance carriers called POINT IN \cite{point_in} and Exceed \cite{exceed} which can handles serialized \gls{xml} input feeds containing the tornado probabilities for each geographical grid location. For the global flood offering, the Integral software package from \textsc{CSC} will serve the same purpose \cite{integral}.
+\subsection{Big Data}
+In a guest blog post, Michael Stonebraker gives four detailed definitions to the term big data\index{big data}\cite{stonebraker}.  Big data is classified as having one of the following attributes: velocity, volume, or variety.  Velocity describes the frequency at which data is expected to arrive, either pushed or pulled. Volume is simply the size of the data sets to be ingested, stored, and processed. Variety describes the various heterogeneous sources and formats which comprise the data sets. A big data label can therefore be applied to a data set having  one or more of these attributes.\\
 
-\subsection{Tornado}
-One business opportunity, currently being pursued by the \textsc{CSC} Data Services group, is tornado prediction within the United States. (CNK - why?) 
-
-[ the why is in the weather congress docs that dan shared]
-
-A primary carrier of property and casualty insurance would potentially be very interested in knowing the probability of tornado occurrence in geographical areas in which they have a large customer base. There are two months in the year which kick off tornado season in the United States: the warm season starting in March, and the cold season starting in November. Having accurate predictions of weekly seasonal tornado counts, months in advance, would constitute a significant business advantage over competitors. There are two specific business cases for the insurance carrier to focus on:
-\begin{itemize}
-    \item an actuary who will use the historical year-to-year probability and future counts to create overlays based on parcel level policy and claims data on a 50km x 50km geographical grid
-    \item an underwriter who will use actuarial information to create the appropriate terms and rates offering for their customers that maximizes revenues at the lowest risk level
-    \item CNK we need to rewrite these bullets from the challenger deck
-\end{itemize}
-An industry analyst, working with \textsc{CSC}, identified the chief underwriter as the primary business target [ CNK expand Noverica Report, 2013]. \\
-
-In order to produce the specific analysis for the actuary, \textsc{CSC} employee Dr. Dan Walker and part-time employee Dr. Christopher Anderson have determined that the necessary data sets for tornado prediction should contain the following [unpublished interview, 2013]:
+The initial input data sets for tornado are the following \cite{walker}:
 \begin{itemize}
     \item 1 MB of \gls{soi} historical archives \cite{bom}
     \item 100 MB of \gls{tvs} \cite{hdss}
     \item 1.5 TB of \gls{ncdc} historical tornado report \cite{ncdc}
 \end{itemize}
-All of this data is in the public domain and freely available to anyone that has the resources to store and analyze it. Dr. Anderson has speculated that there exist variables stored within the three dimensional \gls{merra} archives that can be utilized to further improve prediction. This additional data would be:
+All of this data is in the public domain and freely available to anyone that has the resources to store and analyze it. Dr. Christopher Anderson has speculated that there exist variables stored within the three dimensional \gls{merra} archives that can be utilized to further improve prediction. This additional data would be:
 \begin{itemize}
-    \item 2.5 TB of \gls{merra} 3D historical \cite{mdisc}
+    \item 1.5 TB of \gls{merra} 3D historical \cite{mdisc}
 \end{itemize}
-\subsection{Objective}
+With data volumes approaching several terabytes for the full effort, tornado prediction does not conform to the criteria for big data because it lacks all three attributes. The incoming data velocity can be based on several factors: how often is the input data available, how frequently is the output generated, and how long it takes to processes the incoming data. The tornado analytic is expected to be generated monthly which means input must be processed at least that often. The \gls{soi} and \gls{tvs} data sets are small enough to be considered noise with respect to the larger \gls{merra} data.  Even at several terabytes, \gls{merra} can still fit on one or two hard drives, eliminating the need for more than one system to store all the data.  Four data sets will require four different parsers to process and ingest the data. Preliminary tests have shown that processing a single day of \gls{merra} (300MB) and writing into an SQLite flat file takes approximately 20 seconds per variable a modern CPU \cite{keller1}.\\
 
-[ more advanced discussion of the business model need ]
-[ how are they going to use our data to make better business decisions]
-
-For tornado prediction, the specific analytic produced is a 50km x50km (based on input data granularity) geo-spatial grid of predictions of the probability of tornado occurrences expressed as a Poisson distribution \cite{anderson}. This analytic would be computed monthly [for two tornado seasons] in order to give the carriers enough time to react to the data and to take into account recent data. It's possible to represent the resulting Poisson distribution in a number of ways, either textually or graphically. While an interactive \gls{html} geographical map may best present the results for human consumption, the goal should be to get the information into a system capable of overlaying it with parcel and policy data so as to present a complete picture for decision making. \textsc{CSC} has a policy administration tool for insurance carriers known as POINT IN \cite{point_in}.
-
-[exceed is a another tornado tool]
-
- This product is widely used, making it an ideal platform to ingest the results of our predictive analytics as serialized XML containing the Poisson probabilities for each geographical grid.
-\subsubsection{Implementation}
-While the entirety of the data sets listed above can vary in size from a few hundred gigabytes to a few terabytes, when include in the research and development efforts to reduce uncertainty, it does not fit the accepted big data model. [rewrite]
-
-
-
-In a guest blog post, Michael Stonebraker gives four detailed definitions to the term big data\index{big data}\cite{stonebraker}. 
-
-[ get rid of the word he]
-He boils it down to the same basic concepts that most of the non-technical world uses: velocity, volume, and variety. Even with data volumes approaching several terabytes for the research and development, tornado prediction does not conform to the accepted criteria for big data because it lacks ....
-
-[ what are the critical capabilities that we need to deliver]
-
-\subsubsection{Compute}
-Running the Poisson distribution generator across every grid cell will be computationally expensive. One way to offset this is parallel execution across a small compute cluster in the range of twelve to twenty four cores. If the optional \gls{merra} follow on work is pursued, temporary additional processors may be required to handle processing of the raw data.
-\subsubsection{Storage}
-While it is certainly possible to process this data using a \gls{nosql} data store such as Cassandra \cite{cassandra} or HBase \cite{Hbase}, it is not a requirement, or even necessary. With storage prices approaching several terabytes per \$100, a low end multi-core desktop computer, combined with an efficient distributed processing algorithm, such as MapReduce \cite{mapreduce} will be able to easily handle data sets of this size and generate the intermediate results necessary to compute the Poisson distribution in a timely manner.\\
-
-Table 1 lists a generic key-value model for storing any piece of climate data.
-\begin{table}[htbp]
-	\caption{Climate Data Model}
-	\centering
-	\begin{tabular}{l l}
-		\hline
-		Key & Value \\ [0.5ex]
-		%heading
-		\hline
-		meta-data & what the measurement represents, e.g., total precipitation or soil moisture\\
-		time & time and date of measurement in UTC, e.g., YYYY-MM-DD HH:MM:SS\\
-		coordinates & geographic location in latitude and longitude, e.g. -90.0 to 90.0 and -180.0 to 180.0\\
-		value & measurement value, e.g. 0.000052977\\
-		\hline
-	\end{tabular}
-\end{table}
-With this simple structure and specific materialized views \index{materialized views},  analytics are enabled based on any combination of the following searches: temporal, geospatial, or by meta-data \cite{materialized_views}. 
-%!TEX root=index.tex
-\subsection{Flood}
-A second business opportunity, both global and domestic flood insurance, is currently in the early planning stages within the CSC Data Services group due to its similarity to the tornado use case, making it an ideal next step for CSC. 
-
-[rewrite first sentence into more than one sentence]
-
-
- As before, the  insurance underwriter is the preferred target:
+The flood analytics requires the following initial public domain data sets \cite{walker}:
 \begin{itemize}
-    \item an actuary who will use the historical year-to-year probability and future counts to create overlays based on parcel level policy and claims data
-    \item an underwriter who will use actuarial information to create the appropriate terms and rates offering for their customers that maximizes revenues at the lowest risk level
-\end{itemize}
-The flood related data is less defined, but far more complex, than the tornado data. 
-
-[ better way to cite]
-Again, Dr. Christopher Anderson and Dr. Dan Walker have determined that the necessary data sets to be [unpublished interview, 2013]:
-\begin{itemize}
-    \item NASA satellite rainfall data
-    \item \gls{merra} soil moisture, atmospheric wind,  humidity, and runoff data
+    \item \gls{nasa} satellite rainfall data
+    \item 2.5 TB \gls{merra} soil moisture, atmospheric wind, humidity, and runoff data
     \item streamflow data as available
     \item damage data from previous floods (newspaper, social media, etc) to augment streamflow
     \item satellite data of built structures and inundation
     \item hydrologic response model [CNK]
 \end{itemize}
-As with the tornado data, most if not all, is in the public domain and freely available.
-\subsubsection{Objective}
-The year-to-year probability of the number of floods can be expressed in manner similar tornados, using a Poisson distribution. The analytics would be computed several times per year in order to account for new data and provided either on demand via a portal, an XML feed to POINT IN, or via customized  report, similar to \climatedge.
+Recalling the attributes of big data: velocity, volume, and variety, it becomes clear that flood prediction falls into this category more so than tornado data. It is expected that ingesting relevant newspaper and social media data will add a daily component with reports of damage, especially during the various flood seasons. Even without taking into account the global nature of the offering for flood prediction, the satellite rainfall and \gls{merra} data sets will be larger than the corresponding sets in tornado (mainly due to more input variables). Without even addressing existing structures, the entirety of the input data set is larger. Much of the data sets are computer published, leading to structured input, however the media component implies unstructured data. \\
 
-[integral is a tool for flood]
+The \gls{soi} data set is primarily used as an indicator of an El Niño or La Niña trend which is useful in predictive climate analytics. This data set is updated monthly by the Australian Bureau of Meteorology, giving us a monthly baseline for how frequently our \climatedge offerings are produced. While specific customers may or may not require monthly feeds, the methods will be in place to generate them at that frequency.\\
 
+As seen in table \ref{qualifiers},  the flood analytic ingests a larger and wider variety of data sets at a faster pace than the corresponding tornado analytic. Although the format and frequency of both analytic offerings are similar, the infrastructure needed to produce those offerings are quite different in scale.\\
+\begin{table}[htbp]
+    \centering
+    \begin{tabular}{l l l}
+        \hline
+        Attribute & Tornado & Flood\\ [0.5ex]
+        \hline
+        data velocity & monthly & daily\\
+        data volume &  3TB+  & 1 PB+\\
+        data variety &  4 sets all structured & 6 sets some structured\\
+        \hline
+    \end{tabular}
+    \caption{Big Data Qualifiers}
+    \label{qualifiers}
+\end{table}
+\subsection{Velocity, Volume, and Variety}
+The speed at which sets are processed and stored vary with respect to the particular data. Some data sets are generated daily, e.g. \gls{merra}, some are generated monthly, e.g. \gls{soi}, and some require daily parsing, e.g. newspapers, Twitter \index{Twitter}, or other social media. Although the velocity of incoming data varies by type, it is still expected the output analytics for both tornado and flood are generated monthly on a fixed schedule as determined by the specific customer. If a months worth of data can be be processed in a timely manner, there is no reason to move to daily feeds. Tests were performed on one month of  \gls{merra} (representative of a larger data feed) and shown that on a single 3GHz core, it takes approximately thirty five minutes to parse and store the data, exclusive of retrieval time. It is not expected that monthly retrieval of the structured data sets will present a problem. The unstructured will need to be gathered  on a daily or semi-daily basis in order to stay current. If not retrieved in a timely manner, there is risk of the data disappearing or time spent processing weekly or monthly bulk loads is prohibitive.\\
 
-\subsubsection{Implementation}
-Recalling the attributes of big data: velocity, volume, and variety, it becomes clear that flood prediction falls into this category more so than tornado data. It is expected that ingesting relevant newspaper and social media data will add a real time component, especially during the various flood seasons. Even without taking into account the global nature of the offering for flood prediction, the satellite rainfall and \gls{merra} data sets will be larger than the corresponding sets in tornado (mainly due to more input variables). Without even addressing existing structures, the entirety of the input data set is larger. Much of the data sets are computer published, leading to well formed input, however the media component implies significant variety in the data.  This offering would benefit from a big data platform to handle everything from storing and indexing to analytics.
-\subsubsection{Compute}
- With vastly more raw data used as input for the analytics,
- [what are we trying to stay with the word vastly more]
- 
-  a larger dedicated group of pre-processing cores will be required. As with tornado, running the Poisson distribution generator across every grid cell will be computationally expensive, so twenty four to forty eight cores would be a good initial estimate. Parallel execution is again preferred, but in the twenty four to forty eight core range. 
-\subsubsection{Storage}
-With larger and more diverse data sets comes the need for more storage. The work on flood prediction was not as advanced as tornado, so accurate estimates on data sizes was not available. Best guesses put the storage requirements in the ballpark of hundreds of terabytes to petabytes, requiring a substantially greater infrastructure investment than tornado.
+It is possible to store  all the necessary data required for the tornado analytic on a 1U server with one terabyte drives. Many home computers fall into this category. In contrast, if we stored four drives of four terabytes each in 1U server, we would require sixty four servers to accommodate one petabyte worth of flood data. Replicating the data for high availability adds a factor of two or three to those numbers. Clearly, flood data requires capacity that is orders of magnitude greater than that of the tornado data. An important point is that the persistent storage of data after pre-processing could be significantly less what is needed to process it. For example, \gls{merra} files are typically 100 to 300 MB in size, depending on whether it's two dimensional or three dimensional. These data files contain variables that may or may not be useful in specific offerings. It is possible that out of over thirty variables, only two or three would actually be used which dramatically reduces the amount of persistent data stored and indexed. The data parsers would know which data they need to permanently store and discard the rest. For this reason, it is crucial that the storage used for pre-processing be elastic to save cost.\\
+
+Between the tornado and flood data sets, there are nine separate data sets that need to be pre-processed and stored. While the technology and approach to extracting and storing relevant information from each data is similar, they are still distinct processes that must be developed individually. All four data sets for the tornado analytic are structured with well defined approaches for extracting the required data.  A \gls{merra} parser demonstrating variable extraction and storage has been included in the appendix.  The flood analytic also contains several data sets that are well structured and do not present any significant challenge to data extraction on a continual basis. Within the flood analytic is the unstructured newspaper and associated social media data related to flood reports and damage. This will require a significantly different parsing technology than the structured data and will be the most challenging to develop, implement, and refine.\\
+
+The flood analytic requires data sets with different attributes than that of tornado. The real time nature of newspaper articles and other social media requires daily or semi-daily ingestion. Significant flooding in a key geographic region may require an out of band delivery of the associated analytics.  This information will be reported first by the media near real time and not seen in the structured feeds until the end of the month. The additional data sets required by the global and domestic flood offering surpass that of tornado by many times. The same storage technology, but not necessarily the same platform, will work for both offerings at different scales. Tornado data is well structured, while flood data is both structured and unstructured. Different algorithms, involving semantic and natural language processing, are necessary to effectively parse the variety of feeds associated with flood reporting in the media.  The attributes shown by the flood  data sets map very well to the accepted criteria of big data, while tornado does not. The technology necessary to produce accurate flood analytics are more complex than tornado and at scale.  The expertise developed by building a platform framework capable of generating analytics on both structured and unstructured data will naturally transfer to the next \climatedge offering.
