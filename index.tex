@@ -5,16 +5,14 @@
 	\defaultfontfeatures{Ligatures=TeX}
 %	\newcommand{\lmr}{\fontfamily{lmr}\selectfont} % Latin Modern Roman
 %	\setmainfont{Birka LT Pro}
-	\setmainfont{Kepler Std Light}
-	\setsansfont[Mapping=tex-text]{Myriad Pro}
-	\setmonofont[Scale=MatchLowercase]{Anonymous Pro}
-
-\renewcommand{\ttdefault}{mf}
+    \setmainfont[Mapping=tex-text]{Kepler Std Light}
+    \setsansfont[Mapping=tex-text]{Myriad Pro}
+    \setmonofont[Scale=MatchLowercase]{Anonymous Pro}
+\renewcommand{\ttdefault}{mf} % this makes the monospace font the default one used to what I specified
 \usepackage{emptypage} % this keeps footers off the blank page
 % set line spacing to 1.5
 \usepackage{setspace}
-    \onehalfspacing 
-
+\onehalfspacing 
 \setlength{\parindent}{0pt} % don't indent paragraphs globally
 
 \usepackage{titlesec}
@@ -30,7 +28,6 @@
 %\usepackage[sectionbib]{chapterbib} % this handles references per chapter
 % this handles the risk equation -- may not be necessary
 %\usepackage{amsmath}
-
 %\usepackage[font=sf, labelfont={sf,bf}, margin=1cm]{caption}
 \usepackage[font=small]{caption}
 \PassOptionsToPackage{hyphens}{url}\usepackage{hyperref}
@@ -49,6 +46,8 @@
 \fancyfoot{}
 \fancyfoot[LO,RE]{\small\textit{\textsc{CSC} Confidential. For Internal Distribution Only.}}
 \fancyfoot[LE,RO]{\thepage}
+
+\DeclareMathSizes{10}{18}{12}{8}
 
 \begin{document}
     \input{title}
