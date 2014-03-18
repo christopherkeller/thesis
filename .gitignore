@@ -19,6 +19,7 @@
 *.toc
 *.idx
 *.synctex.gz
+*.glsdefs
 
 # Output files
 *.pdf
