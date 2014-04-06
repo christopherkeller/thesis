@@ -18,6 +18,7 @@
 \usepackage{titlesec}
     \titleformat{\section}{\Large\bfseries\sffamily}{\thesection}{1em}{}
     \titleformat{\subsection}{\large\bfseries\sffamily}{\thesubsection}{1em}{}
+    \titleformat{\subsubsection}{\normalsize\bfseries\sffamily}{\thesubsubsection}{1em}{}
 
 % set up indexing for all the acronyms
 \usepackage{makeidx}
@@ -48,6 +49,10 @@
 \fancyfoot[LE,RO]{\thepage}
 
 \DeclareMathSizes{10}{18}{12}{8}
+
+\usepackage{wrapfig} % wrap text around the picture in the author bio
+
+
 
 \begin{document}
     \input{title}
@@ -81,4 +86,7 @@
     \fancyfoot[LE]{\thepage}
     \fancyfoot[RO]{\thepage}
     \printindex
+    \input{bio}
+    \clearpage
+    \input{disclaimer}
 \end{document} 
